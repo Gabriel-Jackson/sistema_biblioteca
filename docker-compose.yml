@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  apache-local.app:
+    image: 
+    container_name: apache-local.app
+    volumes:
+      - .:/home/thiago/Documentos/Projetos_Gabriel/sistema_biblioteca
+    ports:
+      - "8090:8080"
