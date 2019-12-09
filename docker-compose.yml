@@ -1,11 +1,28 @@
-version: "2"
+version: '2'
 
 services:
 
-  apache-local.app:
-    image: 
-    container_name: apache-local.app
+  php_apache:
+    image: ambientum/php:7.0-apache
+    container_name: php_apache
     volumes:
-      - .:/home/thiago/Documentos/Projetos_Gabriel/sistema_biblioteca
+      - .:/var/www/app/public
     ports:
       - "8090:8080"
+    links:
+      - db
+  
+  db:
+    image: mysql
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "9090:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE="livros"
+      - MYSQL_DATABASE="alunos"
+      - MYSQL_DATABASE="users"
+      - MYSQL_DATABASE="ret/dev"
