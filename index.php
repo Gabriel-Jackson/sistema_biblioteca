@@ -1,11 +1,10 @@
-<?php 
-  
+<?php
+  session_start();
+  if(!isset($_SESSION['user'])){
+    header('Location: http://localhost:8090/login.php');
+  }else{
   require_once ("config/connect.php");
-  
-  
   $max_entries = 3;
-  
-  
   $todoslivros = $connect->query("SELECT * FROM livros ");
 
   $num_pags = $todoslivros->rowCount()/$max_entries;
@@ -31,8 +30,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sistema Bibliotecário</title>
-  <link rel="stylesheet" href="./css/bootstrap.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/public/css/bootstrap.css">
+  <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
 
@@ -106,8 +105,9 @@
     
   </div>
 
-  <script src="./js/jquery.js"></script>
-  <script src="./js/bootstrap.bundle.js"></script>
-  <script src=""></script>
+  <script src="/public/js/jquery.js"></script>
+  <script src="/public/js/bootstrap.bundle.js"></script>
 </body>
 </html>
+
+<?php } ?>
