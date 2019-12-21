@@ -20,8 +20,8 @@ if(isset($_SESSION['user'])){
             }
             header('Location: http://localhost:8090/');
         }else{
-            echo "<script> window.alert('$pass');
-                        window.location.href = 'http://localhost:8090/' ;</script>";
+            echo "<script> window.alert('Usuário ou senha incorreto');
+                        window.location.href = 'http://localhost:8090/app/login.php' ;</script>";
         }
     }
 
@@ -36,7 +36,7 @@ if(isset($_SESSION['user'])){
         <link href="/public/css/style.css" rel="stylesheet">
     </head>
     <body class="text-center">
-        <form class="form-signin" action="login.php" method="POST">
+        <form class="form-signin" action="" method="POST">
             <img class="mb-4 rounded" src="/public/image/login.jpg" alt="" width="200" heigth="200">
             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             <label for="inputUser" class="sr-only">Usuário</label>

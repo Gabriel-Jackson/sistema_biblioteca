@@ -1,5 +1,5 @@
 <?php 
-require_once('config/connect.php');
+require_once('../config/connect.php');
 
 $data = date("Ymd");
 $opt = $_GET['opt'];
@@ -11,7 +11,7 @@ if(isset($opt)){
         echo "<script> window.alert('Retirado com Sucesso');
                         window.location.href = 'http://localhost:8090/' ;</script>";
     }else if($opt == 'devolver'){
-        $devolucao = $connect->exec("UPDATE `Ret/Dev` SET data_Entrega=$data  WHERE id_Livro = $id and data_Entrega is null");
+        $devolucao = $connect->exec("UPDATE `Ret/Dev` SET data_Entrega=$data  WHERE id_Livro = $id and data_Entrega is null")or die(print_r($connect->errorInfo(), true));
         if($devolucao > 0){
             echo "<script> window.alert('Devolvido com Sucesso');
                         window.location.href = 'http://localhost:8090/' ;</script>";
