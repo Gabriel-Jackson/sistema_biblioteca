@@ -9,3 +9,9 @@
     <link rel="stylesheet" href="/public/css/style.css"> --->
 </head>
 <body>
+
+    <?php $this->loadViewInTemplate($viewName, $viewData); ?>
+    <!--- <script src="/public/js/jquery.js"></script>
+    <script src="/public/js/bootstrap.bundle.js"></script> -->
+</body>
+</html>
