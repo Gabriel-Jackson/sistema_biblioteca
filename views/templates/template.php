@@ -7,6 +7,7 @@
     <title>Sistema Bibliotecário</title>
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/style.css">
+    <script src="https://kit.fontawesome.com/84028ed802.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
