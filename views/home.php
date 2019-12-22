@@ -1,5 +1,5 @@
-<table >
-    <thead >
+<table class="table table-dark mt-3">
+    <thead class="thead-dark">
         <tr>
             <th>Titulo</th>
             <th>Autor</th>
@@ -13,6 +13,7 @@
             <td><?=$livro['titulo']?></td>
             <td><?=$livro['autor']?></td>
             <td><?= "Disponível" ?></td>
+            <td>...</td>
         </tr>
     <?php endforeach; ?> 
     </tbody>
