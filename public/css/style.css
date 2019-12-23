@@ -3,7 +3,11 @@ body {
     height: 100%;
 }
 
-body {
+input::placeholder{
+    font-style: italic;
+}
+
+.login {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
