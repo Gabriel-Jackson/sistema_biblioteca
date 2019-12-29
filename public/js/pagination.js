@@ -1,5 +1,5 @@
 var rows = $('tbody tr');
-var numMax = parseInt($("input[name='limit']:checked").val());
+var numMax = parseInt($("input[type='limit']:checked").val());
 
 $(document).ready(function () {
     if(isNaN(numMax)){
@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 
 $("input[name='limit']").click(function (e) { 
-    numMax = parseInt($("input[name='limit']:checked").val());
+    numMax = parseInt($("input[type='limit']:checked").val());
     $('#pag').val(0);
     paginate();
 });
@@ -30,11 +30,11 @@ function changePage(btn,page){
     $(btn).addClass('active');
     paginate();
 }
-function paginate (rowsToPaginate){
+function paginate (){
     numMax = parseInt($("input[name='limit']:checked").val());
 
     
-    var numPags = Math.ceil(rowsToPaginate.length / numMax);
+    var numPags = Math.ceil(rows.length / numMax);
 
     var pag = $('#pag').val();
 
@@ -43,8 +43,8 @@ function paginate (rowsToPaginate){
 
     for(var i = iValue; i < parseInt(iValue + numMax); i ++){
         console.log(i + " " + parseInt(iValue + numMax) + " " + iValue + " " + numMax);
-        if(rowsToPaginate.hasOwnProperty(i)){
-        $(rowsToPaginate[i]).appendTo('tbody');
+        if(rows.hasOwnProperty(i)){
+        $(rows[i]).appendTo('tbody');
         }
     }
     $('#ulPagination li').remove();
