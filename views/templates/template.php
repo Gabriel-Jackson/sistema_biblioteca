@@ -1,3 +1,11 @@
+<?php   
+session_start();
+
+if(!isset($_SESSION['userName'])){
+    header('Location: http://localhost:8090/login');
+}else{
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -69,3 +77,4 @@
 
 </body>
 </html>
+<?php } ?>
