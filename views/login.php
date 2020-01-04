@@ -1,10 +1,4 @@
-<?php   
-session_start();
 
-if(isset($_SESSION['userName'])){
-    header('Location: http://localhost:8090/');
-}else{
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -15,7 +9,7 @@ if(isset($_SESSION['userName'])){
         <link href="/public/css/style.css" rel="stylesheet">
     </head>
     <body class="text-center login">
-        <form class="form-signin" action="/login/validate" method="GET">
+        <form class="form-signin" action="/login" method="POST">
             <img class="mb-4 rounded" src="/public/image/login.jpg" alt="" width="200" heigth="200">
             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             <label for="inputUser" class="sr-only">Usuário</label>
@@ -26,4 +20,3 @@ if(isset($_SESSION['userName'])){
         </form>
     </body>
 </html>
-<?php } ?>

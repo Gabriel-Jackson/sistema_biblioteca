@@ -1,11 +1,13 @@
 <?php
-class user extends model
+class usuario extends model
 {
     private $id;
     private $userName;
     private $userPass;
     private $userPrivilege;
+    
     function __construct() {
+        parent::__construct();
         session_start();
 
         if (isset($_POST["login"])) {
@@ -13,6 +15,9 @@ class user extends model
         }
     }
     private function logar(){
+        $this->userName = $_POST['user'];
+        $this->userPass = $_POST['password'];
+
         $sql = "SELECT * FROM users WHERE name='$this->userName' and pass=md5('$this->userPass')";
         $sql = $this->db->query($sql);
         $user = $sql->fetch();
@@ -26,7 +31,7 @@ class user extends model
     }
     public function isUserLoggedIn()
     {
-        if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1) {
+        if (isset($_SESSION['userName'])) {
             return true;
         }
         // default return

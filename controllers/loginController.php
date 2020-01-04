@@ -3,14 +3,14 @@ session_start();
 class loginController extends controller
 {
     public function index(){
-        $user = new user();
-        $user->setUserName($_POST['user']);
-        $user->setUserPass($_POST['password']);
-
-        $userLogged = $user->validateUser();
+        $user = new usuario();
+        if(!$user->isUserLoggedIn()){
         $this->loadView('login');
+        }else{
+            header('Location: http://localhost:8090/');
+        }
     }
-    public function validate (){
+    /*public function validate (){
         $user = new user();
         $user->setUserName($_POST['user']);
         $user->setUserPass($_POST['password']);
@@ -23,6 +23,6 @@ class loginController extends controller
             header("Location: http://localhost:8090/");
         }
         
-    }
+    }*/
 }
-
+?>
