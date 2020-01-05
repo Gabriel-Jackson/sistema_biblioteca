@@ -14,8 +14,8 @@
     </div>
 </form>
 <input type="hidden" name="pag" id="pag" value="0">
-<table class="table table-stripped mt-3 mb-3 border">
-    <thead class="thead">
+<table class="table table-dark table-striped mt-3 mb-3 border">
+    <thead class="thead-dark">
         <tr>
             <th scope="col">Titulo</th>
             <th scope="col">Autor</th>
@@ -28,8 +28,8 @@
         <tr>
             <td scope="row" class="titulo"><?=$livro['titulo']?></td>
             <td class="autor"><?=$livro['autor']?></td>
-            <td class="status"><?= "Disponível" ?></td>
-            <td><button class="btn"><i class="fas fa-ellipsis-h"></button></i></td>
+            <td class="status"><?= $livro['status'] ?></td>
+            <td><a class="btn btn-link" href="/livro?id=<?=$livro['id']?>"><i class="fas fa-ellipsis-h"></a></i></td>
         </tr>
     <?php endforeach; ?> 
     </tbody>

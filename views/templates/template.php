@@ -16,8 +16,8 @@ if(!isset($_SESSION['userName'])){
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/style.css">
     <script src="https://kit.fontawesome.com/84028ed802.js" crossorigin="anonymous"></script>
-    <script src="public/js/jquery.js"></script>
-    <script src="public/js/bootstrap.bundle.js"></script>
+    <script src="/public/js/jquery.js"></script>
+    <script src="/public/js/bootstrap.bundle.js"></script>
 </head>
 <body>
 
