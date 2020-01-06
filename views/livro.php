@@ -7,6 +7,16 @@
             <div class="h3 "><strong>Titulo:</strong> <?= $livro['titulo'];?></div>
             <div class="h3 "><strong>Autor:</strong> <?= $livro['autor'];?></div>
             <div class="h3 "><strong>Status:</strong> <?= $status;?></div>
+            <?php 
+                if ($status == "Retirado") {
+            ?>
+                <div class="h3"><strong>Data para Entrega:</strong> <?= date("d/m/Y",strtotime($livro['data_para_entrega']));?></div>    
+                    
+                    
+                    
+            <?php
+                }
+            ?>
         </div>
         <form action="/livro?id=<?= $livro['id']?>" method="post">
             <input type="hidden" name="id" value="<?= $livro['id'] ?>"> 

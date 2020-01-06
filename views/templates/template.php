@@ -31,13 +31,13 @@ if(!isset($_SESSION['userName'])){
             <div class="collapse navbar-collapse aling-self-start" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Retiradas/Devoluções</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Usuários</a>
                     </li>
                 </ul>
                 <form class="d-flex flex-column justify-content-center form-inline my-2 my-lg-0" action="" method="GET" name="filtro">

@@ -56,7 +56,9 @@ class livro extends model
     }
     public function getLivro(){
         $livro = null;
-        $sql = "SELECT * FROM livros where id=".$this->id."";
+        $sql = "SELECT L.*, R.data_para_entrega, R.data_devolucao FROM livros  as L left join `Ret/Dev` as R
+        on R.id_livro = L.id
+        where L.id=$this->id ORDER BY R.id DESC";
         $sql = $this->db->query($sql);
 
         if($sql->rowCount() > 0){
@@ -66,7 +68,7 @@ class livro extends model
         return $livro;
     }
     public function getStatus($id){
-        $sql = "SELECT L.id, R.id as id_ret, R.data_retirada, R.data_devolucao FROM livros as L 
+        $sql = "SELECT L.id, R.id as id_ret, R.data_retirada ,R.data_devolucao FROM livros as L 
         LEFT JOIN `Ret/Dev` as R  
         on R.id_livro=L.id 
         WHERE L.id=$id
@@ -88,8 +90,8 @@ class livro extends model
     }
 
     public function retirarLivro(){
-        $sql = "INSERT INTO `Ret/Dev` (data_retirada,id_livro,id_user)
-        VALUES (current_timestamp(),".$this->id.",".$_SESSION['userId'].")";
+        $sql = "INSERT INTO `Ret/Dev` (data_retirada,data_para_entrega,id_livro,id_user)
+        VALUES (current_timestamp(),"." '".date("Y-m-d H:i:s",strtotime("+ 1 week"))."',".$this->id.",".$_SESSION['userId'].")";
         if($this->status != "Retirado"){
         $this->db->query($sql);
         echo "<script>
