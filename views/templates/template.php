@@ -37,7 +37,7 @@ if(!isset($_SESSION['userName'])){
                     <a class="nav-link" href="#">Retiradas/Devoluções</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Usuários</a>
+                        <a class="nav-link disabled" href="/users" tabindex="-1" >Usuários</a>
                     </li>
                 </ul>
                 <form class="d-flex flex-column justify-content-center form-inline my-2 my-lg-0" action="" method="GET" name="filtro">
@@ -71,7 +71,8 @@ if(!isset($_SESSION['userName'])){
         </nav>
         
     <div class="container">
-        <?php $this->loadViewInTemplate($viewName, $viewData); ?>
+        <?php 
+        $this->loadViewInTemplate($viewName, $viewData); ?>
     </div>
 
 

@@ -14,6 +14,27 @@ class usuario extends model
             $this->logar();
         }
     }
+    public function getUsers(){
+        $sql = "SELECT id, users.name, privilege FROM users";
+        $sql = $this->db->query($sql);
+        $users = $sql->fetchAll();
+        return $users;
+    }
+
+    public function getUser(){
+
+        $sql = "SELECT users.name, privilege from users where id =".$this->getId()."";
+        $sql = $this->db->query($sql)or die(print_r($this->db->errorInfo(), true));;
+
+        $user = $sql->fetch();
+
+        return $user;
+    }
+
+    public function getUserLast5Actions (){
+        $sql = "SELECT R.data_retirada, R.data_devolucao, L.titulo from `Ret/Dev` as R LEFT JOIN livros as L on 
+        R.id_user = ".$this->getId()." LIMIT 2";
+    }
     private function logar(){
         $this->userName = $_POST['user'];
         $this->userPass = $_POST['password'];
@@ -29,6 +50,7 @@ class usuario extends model
             return null;
         }
     }
+
     public function isUserLoggedIn()
     {
         if (isset($_SESSION['userName'])) {
@@ -37,6 +59,7 @@ class usuario extends model
         // default return
         return false;
     }
+
     function __call($metodo, $parametros){
         // Selecionando os 3 primeiros caracteres do método chamado
         $prefixo  = substr($metodo, 0, 3);
