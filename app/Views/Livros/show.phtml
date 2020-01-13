@@ -1,0 +1,33 @@
+<div class="container">
+    <img class="img-fluid img-thumbnail float-left m-3" src="/assets/images/<?= $this->view->livro->imagePath?>" alt="capa" width="300px"/>
+    <div class="h-100 row">
+        <div class="p-3 align-items-end col ">
+            <div class="text-center">
+                <p class="h2 text-center"> Informações </p>
+            </div>
+            <div class="m2 p2 border my-auto">
+                <div
+                <div class="h3 "><strong>Titulo: </strong> <?= $this->view->livro->titulo;?></div>
+                <div class="h3 "><strong>Autor: </strong> <?= $this->view->livro->autor;?></div>
+                <div class="h3 "><strong>Status: </strong><?= $this->view->livro->status;?></div>
+                <?php if($this->view->livro->status == "Retirado"):?>
+                    <div class="h3 "><strong>Data para Entrega: </strong><?= date('d/m/Y',strtotime($this->view->livro->data_entrega));?></div>
+                <?php endif;?>
+            </div>
+            <div class=" m-2">
+                <a href="/livros/<?= $this->view->livro->id; ?>/delete" class="btn btn-outline-danger btn-sm float-left" onclick="return confirm('Deseja deletar este post?');">
+                    <i class="fas fa-trash"></i>
+                </a>
+
+                <a class="btn btn-outline-success float-right mx-2<?php if($this->view->livro->status != "Retirado"):?>
+                disabled<?php endif;?>" href="/livros/<?=$this->view->livro->id ?>/devolver" > Devolver </a>
+                <a class="btn btn-outline-danger float-right <?php if($this->view->livro->status != "Disponível"):?>
+                    disabled<?php endif;?>" href="/livros/<?=$this->view->livro->id ?>/retirar" > Retirar </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<?php
