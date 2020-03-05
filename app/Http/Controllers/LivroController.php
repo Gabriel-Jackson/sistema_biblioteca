@@ -222,7 +222,7 @@ class LivroController extends Controller
 
             if ($retirada) {
                 \Session::flash('mensagem', ['msg' => 'Livro Retirado com Sucesso!', 'class' => 'green white-text']);
-                return redirect()->back();
+                return redirect()->route('livros');
             }
             $acao->delete();
         }
@@ -249,12 +249,12 @@ class LivroController extends Controller
             if ($devolucao) {
                 
                 \Session::flash('mensagem', ['msg' => 'Livro devolvido com Sucesso!', 'class' => 'green white-text']);
-                return redirect()->back();
+                return redirect()->route('livros');
             }
             $acao->delete();
         }
         
         \Session::flash('mensagem',['msg' => 'Erro ao devolver livro!', 'class' => 'red white-text']);
-        return redirect()->back();
+        return redirect()->route('livros');
     }
 }

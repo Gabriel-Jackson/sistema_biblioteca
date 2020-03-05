@@ -34,6 +34,7 @@ class Acoes extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('acoes');
     }
 }
