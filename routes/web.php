@@ -11,6 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/livros', 'LivroController@index')->name('livros');    
+    
+    Route::get('/livros/add', 'LivroController@add')->name('livros.add');    
+    Route::post('/livros/add', 'LivroController@save');
+
+    Route::get('/livros/show/{id}', 'LivroController@show')->name('livros.show');    
+    
+    Route::get('/livros/edit/{id}', 'LivroController@edit')->name('livros.edit');    
+    Route::post('/livros/edit/{id}', 'LivroController@update');    
+    
+    Route::get('/livros/delete/{id}', 'LivroController@delete')->name('livros.delete');    
+    Route::get('/livros/retirar/{id}', 'LivroController@retirar')->name('livros.retirar');    
+    Route::get('/livros/devolver/{id}', 'LivroController@devolver')->name('livros.devolver');    
+
 });
+Route::get('/', 'HomeController@index')->name('home');
