@@ -16,14 +16,19 @@
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/livros', 'LivroController@index')->name('livros');    
+    Route::get('/users', 'UserController@index')->name('users');    
     
     Route::get('/livros/add', 'LivroController@add')->name('livros.add');    
     Route::post('/livros/add', 'LivroController@save');
+    
+    Route::get('/users/add', 'UserController@add')->name('users.add');    
+    Route::post('/users/add', 'UserController@save');
 
     Route::get('/livros/show/{id}', 'LivroController@show')->name('livros.show');    
     
-    Route::get('/livros/edit/{id}', 'LivroController@edit')->name('livros.edit');    
-    Route::post('/livros/edit/{id}', 'LivroController@update');    
+    Route::get('/users/edit/{id}', 'UserController@edit')->name('users.edit');    
+    Route::post('/users/edit/{id}', 'UserController@update');    
+    Route::get('/users/delete/{id}', 'UserController@delete')->name('users.delete');
     
     Route::get('/livros/delete/{id}', 'LivroController@delete')->name('livros.delete');    
     Route::get('/livros/retirar/{id}', 'LivroController@retirar')->name('livros.retirar');    
