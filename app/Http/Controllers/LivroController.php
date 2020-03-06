@@ -203,7 +203,14 @@ class LivroController extends Controller
         \Session::flash('mensagem',['msg' =>'Ocorreu um eroo ao excluir o livro', 'class' => 'red white-text']);
             return redirect()->route('livros');
     }
+    public function filter(Request $request,Livro $livro){
+        $dataFiltro = $request->all();
+        array_shift($dataFiltro);
+        $livros = $livro->search($dataFiltro);
 
+        return view('livros.home',['livros' => $livros]);
+
+    }
     public function retirar(int $id){
         $livro = Livro::find($id);
 

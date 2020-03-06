@@ -16,6 +16,7 @@
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/livros', 'LivroController@index')->name('livros');    
+    Route::post('/livros', 'LivroController@filter');    
     Route::get('/users', 'UserController@index')->name('users');    
     
     Route::get('/livros/add', 'LivroController@add')->name('livros.add');    
@@ -30,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/users/edit/{id}', 'UserController@update');    
     Route::get('/users/delete/{id}', 'UserController@delete')->name('users.delete');
     
+    Route::get('/livros/edit/{id}', 'LivroController@edit')->name('livros.edit');    
+    Route::post('/livros/edit/{id}', 'LivroController@update');    
     Route::get('/livros/delete/{id}', 'LivroController@delete')->name('livros.delete');    
     Route::get('/livros/retirar/{id}', 'LivroController@retirar')->name('livros.retirar');    
     Route::get('/livros/devolver/{id}', 'LivroController@devolver')->name('livros.devolver');    
