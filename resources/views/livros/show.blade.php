@@ -17,7 +17,11 @@
             <div class="">
                 <div class="card-title">
                     <span><strong>Informações</strong>
-                    <a class="btn-flat waves-effect black-text right" href="{{route('livros.edit',$livro->id)}}"><i class="material-icons">edit</i></a>
+                    @if (\Auth::user()->privilege == 'admin')
+                        <a class="btn-flat waves-effect black-text right" href="{{route('livros.edit',$livro->id)}}">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    @endif  
                     </span>
                 </div>
                 <div class="card-content col s12">
@@ -38,9 +42,12 @@
                                 disabled
                                 @endif">Devolver</a>
                         </span>
-                        <a class="btn red waves-effect white-text left @if ($livro->status != "Disponível")
-                            disabled
-                            @endif" href="{{route('livros.delete',$livro->id)}}" onclick="return confirm('Deseja excluir este livro?')"><i class="material-icons ">delete_outline</i></a>
+                        @if (\Auth::user()->privilege == 'admin')
+                            <a class="btn red waves-effect white-text left @if ($livro->status != "Disponível")
+                                disabled
+                                @endif" href="{{route('livros.delete',$livro->id)}}" onclick="return confirm('Deseja excluir este livro?')"><i class="material-icons ">delete_outline</i>
+                            </a>
+                        @endif  
                     </div>
                 </div>
             </div>
