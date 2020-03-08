@@ -252,7 +252,7 @@ class LivroController extends Controller
         $acao->user_id = \Auth::user()->id;
         $acao->livro_id = $id;
         $acao->data_acao = date("Y-m-d");
-        $acao->data_devolucao = date('Y-m-d',strtotime("-".$dataDev_conf->value));
+        $acao->data_devolucao = date('Y-m-d',strtotime("+".$dataDev_conf->value));
         $livro->status = "Retirado";
 
         

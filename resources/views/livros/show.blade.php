@@ -1,6 +1,11 @@
 @extends('layouts.site')
 
 @section('content')
+    @if($livro->status == "Atrasado")
+        <div class="row">
+            <h3 class="red-text">Multa: {{"R$ ".number_format($livro->multa,'2',',','.')}}</h3>
+        </div>
+    @endif
     <div class="row">
         <div class="col s5">
             @if (Storage::disk('public')->exists('capas/'.$livro->image))
@@ -18,7 +23,8 @@
                 <div class="card-content col s12">
                     <p><strong>Título: </strong>{{$livro->titulo}}</p>
                     <p><strong>Autor: </strong>{{$livro->autor}}</p>
-                    <p><strong>Status: </strong>{{$livro->status}}</p>
+                    <p class="@if($livro->status == "Atrasado")
+                        red-text @endif"><strong >Status: </strong>{{$livro->status}}</p>
                     <p><strong>Sinopse: </strong>{{$livro->sinopse}}</p>
                 </div>
 
