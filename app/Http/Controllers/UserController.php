@@ -69,7 +69,7 @@ class UserController extends Controller
         $this->validate($request, [
             'nome' => 'required|string',
             'login' => 'required|string',
-            'password' => 'string|min:4',
+            'password' => 'required_with:oldPassword|string|min:4|nullable',
             'privilege' => 'string'
         ]);
         // Se validar pega os dados do request
@@ -93,6 +93,9 @@ class UserController extends Controller
         //se salvar retorna pra página inicial
         //com mensagem de sucesso
         if($updateUser){
+            if ($id == \Auth::user()->id) {
+                \Auth::logout();
+            }
             \Session::flash('mensagem', ['msg' => 'Usuário atualizado com sucesso', 'class' => 'green white-text']);
             return redirect()->route('users');
         }
@@ -104,14 +107,18 @@ class UserController extends Controller
     }
     
     public function delete(int $id){
-        $user = User::find($id);
+        if ($id != \Auth::user()->id) {
+            $user = User::find($id);
 
-        $delUser = $user->delete();
-        if($delUser){
-            \Session::flash('mensagem',['msg' =>'Usuário excluído com sucesso', 'class' => 'yellow black-text']);
+            $delUser = $user->delete();
+            if ($delUser) {
+                \Session::flash('mensagem', ['msg' =>'Usuário excluído com sucesso', 'class' => 'yellow black-text']);
+                return redirect()->route('users');
+            }
+            \Session::flash('mensagem', ['msg' =>'Ocorreu um erro ao excluir o usuário', 'class' => 'red white-text']);
             return redirect()->route('users');
         }
-        \Session::flash('mensagem',['msg' =>'Ocorreu um erro ao excluir o usuário', 'class' => 'red white-text']);
+        \Session::flash('mensagem', ['msg' =>'Não é permitido excluir um usuário em uso', 'class' => 'red white-text']);
             return redirect()->route('users');
     }
 }
