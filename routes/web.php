@@ -37,5 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/livros/retirar/{id}', 'LivroController@retirar')->name('livros.retirar');    
     Route::get('/livros/devolver/{id}', 'LivroController@devolver')->name('livros.devolver');    
 
+    Route::get('admin','AdminController@index')->name('admin');
+    Route::get('admin/config','AdminController@config')->name('config');
+    Route::post('admin/config','AdminController@update');
 });
 Route::get('/', 'HomeController@index')->name('home');

@@ -6,6 +6,7 @@ use Image;
 use App\Acao;
 use DateTime;
 use App\Livro;
+use App\Config;
 use Illuminate\Http\Request;
 
 class LivroController extends Controller
@@ -13,7 +14,7 @@ class LivroController extends Controller
     public function index(){
         //Seleciona Todos os Livros
         $livros = Livro::all();
-        
+        $multaConf = Config::where('param','multa')->first();
         //percorre todos um por um
         foreach ($livros as $livro) {
             //Se o Status for Diferente de Disponível
@@ -28,9 +29,10 @@ class LivroController extends Controller
                 //pega a data para qual está marcada
                 //a entrega
                 $data_para_entrega = new DateTime($acao->data_devolucao);
-
+                
                 //Se a data de entrega for menor que
                 if ($data_para_entrega < $data_atual) {
+                    $livro->multa = floatval(date_diff($data_atual,$data_para_entrega)->days) * floatval($multaConf->value);
                     $livro->status = "Atrasado";
                     $livro->update();
                 }
@@ -58,9 +60,16 @@ class LivroController extends Controller
         $data = $request->all();
         //instancia um novo livro
         $livro = new Livro;
-        
+        //instancia uma nova ação
+        $acao = new Acao;
+
         //remove a chave _token dos dados
         array_shift($data);
+        //seta os valores da ação
+        $acao->tipo = "Criação";
+        $acao->user_id = \Auth::user()->id;
+        $acao->data_acao = date("Y-m-d");
+        $acao->data_devolucao = null;
 
         //se a imagem existir e for valida 
         //faz o tratamento da mesma
@@ -104,6 +113,8 @@ class LivroController extends Controller
         //se salvar retorna pra página inicial
         //com mensagem de sucesso
         if($addLivro){
+            $acao->livro_id = $livro->id;
+            $acao->save();
             \Session::flash('mensagem', ['msg' => 'Livro adicionado com sucesso', 'class' => 'green white-text']);
             return redirect()->route('livros');
         }
@@ -136,9 +147,18 @@ class LivroController extends Controller
         $data = $request->all();
         //instancia o livro
         $livro = Livro::find($id);
-        
+
+        //instancia uma nova ação
+        $acao = new Acao;
+
         //remove a chave _token dos dados
         array_shift($data);
+
+        //seta os valores da ação
+        $acao->tipo = "Edição";
+        $acao->user_id = \Auth::user()->id;
+        $acao->data_acao = date("Y-m-d");
+        $acao->data_devolucao = null;
 
         //se a imagem existir e for valida 
         //faz o tratamento da mesma
@@ -182,6 +202,8 @@ class LivroController extends Controller
         //se salvar retorna pra página inicial
         //com mensagem de sucesso
         if($updateLivro){
+            $acao->livro_id = $id;
+            $acao->save();
             \Session::flash('mensagem', ['msg' => 'Livro atualizado com sucesso', 'class' => 'green white-text']);
             return redirect()->route('livros');
         }
@@ -195,8 +217,18 @@ class LivroController extends Controller
     public function delete(int $id){
         $livro = Livro::find($id);
 
+        //instancia uma nova ação
+        $acao = new Acao;
+        //seta os valores da ação
+        $acao->tipo = "Exclusão";
+        $acao->data_acao = date("Y-m-d");
+        $acao->data_devolucao = null;
+        $acao->user_id = \Auth::user()->id;
+        $acao->livro_exc = $livro->titulo;
         $delLivro = $livro->delete();
         if($delLivro){
+            
+            $acao->save();
             \Session::flash('mensagem',['msg' =>'Livro excluído com sucesso', 'class' => 'yellow black-text']);
             return redirect()->route('livros');
         }
@@ -215,11 +247,12 @@ class LivroController extends Controller
         $livro = Livro::find($id);
 
         $acao = new Acao;
-
+        $dataDev_conf = Config::where('param','dias_dev')->first();
         $acao->tipo = "Retirada";
         $acao->user_id = \Auth::user()->id;
         $acao->livro_id = $id;
-
+        $acao->data_acao = date("Y-m-d");
+        $acao->data_devolucao = date('Y-m-d',strtotime("-".$dataDev_conf->value));
         $livro->status = "Retirado";
 
         
@@ -245,10 +278,11 @@ class LivroController extends Controller
         $acao->tipo = "Devolução";
         $acao->user_id = \Auth::user()->id;
         $acao->livro_id = $id;
+        $acao->data_acao = date("Y-m-d");
         $acao->data_devolucao = null;
 
         $livro->status = "Disponível";
-
+        $livro->multa = 0;
         $actDevolver = $acao->save();
 
         if($actDevolver){
