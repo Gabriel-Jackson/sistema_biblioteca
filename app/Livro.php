@@ -10,7 +10,7 @@ class Livro extends Model
         return $this->hasMany('App\Acao');
     }
 
-    public function search(Array $data){
+    public function search(Array $data,int $totalPage){
         $results = $this->where(function ($query) use($data){
             foreach($data as $field => $value){
                 if (isset($value)) {
@@ -21,7 +21,7 @@ class Livro extends Model
                     }
                 }
             }
-        })->paginate(15);
+        })->paginate(intval($totalPage));
         return $results;
     }
 }

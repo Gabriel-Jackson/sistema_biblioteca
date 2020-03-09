@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class LivroController extends Controller
 {   
     public function index(){
+        
         //Seleciona Todos os Livros
         $livros = Livro::all();
         $multaConf = Config::where('param','multa')->first();
@@ -39,7 +40,12 @@ class LivroController extends Controller
             }
         }
 
-        $livros = Livro::paginate(15);
+        $totalItems = 6;
+        if(isset($_GET['totalItems'])){
+            $totalItems = intval($_GET['totalItems']);
+        }
+
+        $livros = Livro::paginate($totalItems);
 
         return view('livros.home',['livros' => $livros]);
     }
@@ -63,7 +69,7 @@ class LivroController extends Controller
                 'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
             ]);
             // Se validar pega os dados do request
-            $data = $request->all();
+            $data = $request->except('_token');
             //instancia um novo livro
             $livro = new Livro;
             //instancia uma nova ação
@@ -161,7 +167,7 @@ class LivroController extends Controller
                 'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
             ]);
             // Se validar pega os dados do request
-            $data = $request->all();
+            $data = $request->except('_token');
             //instancia o livro
             $livro = Livro::find($id);
 
@@ -264,11 +270,14 @@ class LivroController extends Controller
     }
 
     public function filter(Request $request,Livro $livro){
-        $dataFiltro = $request->all();
-        array_shift($dataFiltro);
-        $livros = $livro->search($dataFiltro);
+        $dataFiltro = $request->except(['_token','page']);
+        $totalItems = isset($dataFiltro['totalItems'])? $dataFiltro['totalItems']: 15;
+        if(isset($dataFiltro['totalItems'])){
+            unset($dataFiltro['totalItems']);
+        }
+        $livros = $livro->search($dataFiltro,intval($totalItems));
 
-        return view('livros.home',['livros' => $livros]);
+        return view('livros.home',['livros' => $livros,'dataForm' => $dataFiltro,'totalItems' => $totalItems]);
 
     }
 

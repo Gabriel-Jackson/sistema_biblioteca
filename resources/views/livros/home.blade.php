@@ -3,7 +3,7 @@
 @section('content')
     <div class="">
         <div class="row">
-            <form action="{{route('livros')}}" method="post">
+            <form action="{{route('livros.filter')}}" method="post">
                 {{ csrf_field() }}
                 <div class="input-field col s4">
                     <input type="text" name="titulo" id="titulo">
@@ -23,18 +23,23 @@
                     <label for="privilege">Privilégio</label>
                 </div>
                 <div class="row center">
+                    <div class="input-field col s3">
+                        <input type="text" name="totalItems" id="totalItems" value="{{$totalItems}}">
+                        <label for="totalItems">Nº de Registro por página: </label>
+                    </div>
                     <div class="input-field col s4" style="margin-left: 30%">
                         <input class="btn"type="submit" value="Filtrar">
                     </div>
                 </div>
             </form>
         </div>
-        <div class="row">
-            <a class="btn left" href="{{route('livros.add')}}">
-                Adicionar livro<i class="material-icons right">add</i>
-            </a>
-        </div>
-        
+        @if(\Auth::user()->privilege == 'admin')
+            <div class="row">
+                <a class="btn left" href="{{route('livros.add')}}">
+                    Adicionar livro<i class="material-icons right">add</i>
+                </a>
+            </div>
+        @endif
         <table>
             <thead>
                 <th>Titulo</th>
@@ -55,8 +60,15 @@
                 @endforeach
             </tbody>
         </table>
-        
-        {{$livros->links()}}
+        @if(isset($totalItems))
+            @if(isset($dataForm))
+                {{$livros->appends(["totalItems" => $totalItems])->appends($dataForm)->links()}}
+            @else
+                {{$livros->appends(["totalItems" => $totalItems])->links()}}
+            @endif
+        @else
+            {{$livros->links()}}
+        @endif
     </div>
     
 @endsection

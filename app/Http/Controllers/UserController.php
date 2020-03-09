@@ -40,7 +40,7 @@ class UserController extends Controller
                 'privilege' => 'required|string'
             ]);
             // Se validar pega os dados do request
-            $data = $request->all();
+            $data = $request->except('_token');
             //instancia um novo livro
             $user = new User;
             
@@ -95,7 +95,7 @@ class UserController extends Controller
                 'privilege' => 'string'
             ]);
             // Se validar pega os dados do request
-            $data = $request->all();
+            $data = $request->except('_token');
             
 
             //adicona os valores passados no usuário 

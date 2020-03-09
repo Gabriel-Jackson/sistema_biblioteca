@@ -17,7 +17,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     //rotas padrão não requerem privilégios administrativos
     Route::get('/livros', 'LivroController@index')->name('livros');    
-    Route::post('/livros', 'LivroController@filter');    
+    Route::any('/livros', 'LivroController@filter')->name('livros.filter');    
     Route::get('/livros/add', 'LivroController@add')->name('livros.add');    
     Route::post('/livros/add', 'LivroController@save');
 
