@@ -1,11 +1,6 @@
 @extends('layouts.site')
 
 @section('content')
-    @if($livro->status == "Atrasado")
-        <div class="row">
-            <h3 class="red-text">Multa: {{"R$ ".number_format($livro->multa,'2',',','.')}}</h3>
-        </div>
-    @endif
     <div class="row">
         <div class="col s5">
             @if (Storage::disk('public')->exists('capas/'.$livro->image))
@@ -25,6 +20,12 @@
                     </span>
                 </div>
                 <div class="card-content col s12">
+                    @if($livro->status != "Disponível")
+                    @if($livro->status == "Atrasado")
+                        <p class="red-text">Multa: {{"R$ ".number_format($livro->multa,'2',',','.')}}</p>
+                    @endif
+                        <p><strong>Data para entrega: </strong>{{date('d/m/Y',strtotime($acao->data_devolucao))}}</p>
+                    @endif
                     <p><strong>Título: </strong>{{$livro->titulo}}</p>
                     <p><strong>Autor: </strong>{{$livro->autor}}</p>
                     <p class="@if($livro->status == "Atrasado")

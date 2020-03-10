@@ -15,30 +15,7 @@ class LivroController extends Controller
         
         //Seleciona Todos os Livros
         $livros = Livro::all();
-        $multaConf = Config::where('param','multa')->first();
-        //percorre todos um por um
-        foreach ($livros as $livro) {
-            //Se o Status for Diferente de Disponível
-            if ($livro->status != "Disponível") {
-
-                //pega a última retirada desse livro
-                $acao = $livro->acoes()->where('tipo', '=', 'Retirada')->latest()->first();
-
-                //pega a data atual
-                $data_atual = new DateTime("now");
-                
-                //pega a data para qual está marcada
-                //a entrega
-                $data_para_entrega = new DateTime($acao->data_devolucao);
-                
-                //Se a data de entrega for menor que
-                if ($data_para_entrega < $data_atual) {
-                    $livro->multa = floatval(date_diff($data_atual,$data_para_entrega)->days) * floatval($multaConf->value);
-                    $livro->status = "Atrasado";
-                    $livro->update();
-                }
-            }
-        }
+        
 
         $totalItems = 6;
         if(isset($_GET['totalItems'])){
@@ -143,7 +120,13 @@ class LivroController extends Controller
 
     public function show($id){
         $livro = Livro::find($id);
-        return view('livros.show',['livro' => $livro]);
+        if ($livro->status !="Disponível") {
+            //pega a última retirada desse livro
+            $acao = $livro->acoes()->where('tipo', '=', 'Retirada')->latest()->first();
+        }else{
+            $acao = "";
+        }
+        return view('livros.show',['livro' => $livro, 'acao' => $acao]);
     }
 
     public function edit($id){
